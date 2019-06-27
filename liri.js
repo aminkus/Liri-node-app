@@ -7,7 +7,7 @@ var Spotify = require('node-spotify-api');
 var spotify = new Spotify(keys.spotify);
 const axios = require('axios');
 var fs = require("fs");
-var moment = require("moment");
+var dateFns = require("date-fns")
 
 
 //grabs user command
@@ -65,7 +65,6 @@ function getSong(song) {
             return console.log('Error occurred: ' + err);
         }
         console.log("****************** \r\n");
-        console.log(data.tracks.items[0]);
         console.log(`Artist: ${data.tracks.items[0].artists[0].name} \r\n`);
         console.log(`Song Name: ${data.tracks.items[0].name} \r\n`);
         console.log(`Preview Link: ${data.tracks.items[0].preview_url} \r\n`);
@@ -77,7 +76,14 @@ function getBandDates(band) {
     var bandQueryUrl = `https://rest.bandsintown.com/artists/${band}/events?app_id=codingbootcamp`;
 
     axios.get(bandQueryUrl).then(function (response) {
-        console.log(response.data);
+
+        console.log("****************** \r\n");
+        console.log(`Name of venue: ${response.data[0].venue.name}\r\n`);
+        console.log(`Venue location: ${response.data[0].venue.city}, ${response.data[0].venue.country}\r\n`);
+        var date = response.data[1].datetime.split(" ")
+        var formatDate = dateFns.format(date, 'MM/DD/YYYY')
+        console.log(`Date of event: ${formatDate}`)
+
     });
 }
 
@@ -90,10 +96,8 @@ function getRandom() {
         }
       
         // We will then print the contents of data
-        console.log(data);
         var dataArr = data.split(",");
-        console.log(dataArr);
-        getSong(dataArr[1])
+        getSong(dataArr[1]);
     })
 };
 
