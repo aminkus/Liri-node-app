@@ -11,9 +11,9 @@ var dateFns = require("date-fns")
 
 
 //grabs user command
-var userCommand = process.argv[2].toLowerCase();
+var userCommand = process.argv[2];
 //grabs user search
-var userSearch = process.argv.slice(3).join(" ").toLowerCase();
+var userSearch = process.argv.slice(3).join(" ");
 
 
 //create if statement in order to execute correct function
